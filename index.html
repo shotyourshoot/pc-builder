@@ -95,7 +95,7 @@
         <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
           <h2 class="text-sm font-bold text-white flex items-center gap-2">
             <span>Your Build</span>
-            <span id="build-count" class="text-xs px-2 py-0.5 rounded-full bg-blue-950 text-blue-400 border border-blue-800/40">0/10</span>
+            <span id="build-count" class="text-xs px-2 py-0.5 rounded-full bg-blue-950 text-blue-400 border border-blue-800/40">0/11</span>
           </h2>
           <button onclick="clearAllBuild()" class="text-xs text-red-400 hover:text-red-300 font-medium transition">Clear all</button>
         </div>
@@ -121,7 +121,6 @@
             <button onclick="saveBuildPrompt()" class="flex items-center justify-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 py-2 rounded-lg text-xs font-semibold transition text-zinc-300 hover:text-white">
               <i class="fa-regular fa-bookmark text-zinc-400"></i> Save build
             </button>
-            <!-- Updated Share Button -->
             <button onclick="shareBuildPrompt()" class="flex items-center justify-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 py-2 rounded-lg text-xs font-semibold transition text-zinc-300 hover:text-white">
               <i class="fa-solid fa-copy text-zinc-400"></i> Copy List
             </button>
@@ -184,12 +183,27 @@
 
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
-    // 10 Categories List
+    // 1. Categories for Browsing (Category Pills)
     const categories = [
       { id: 'cpu', label: 'CPU' },
       { id: 'mobo', label: 'Motherboard' },
       { id: 'gpu', label: 'Video Card' },
       { id: 'ram', label: 'RAM' },
+      { id: 'storage', label: 'Storage' },
+      { id: 'psu', label: 'PSU' },
+      { id: 'cooler', label: 'CPU Cooler' },
+      { id: 'case', label: 'Case' },
+      { id: 'fan', label: 'Case Fan' },
+      { id: 'monitor', label: 'Monitor' }
+    ];
+
+    // 2. Build Slots for the Sidebar Display
+    const buildSlots = [
+      { id: 'cpu', label: 'CPU' },
+      { id: 'mobo', label: 'Motherboard' },
+      { id: 'gpu', label: 'Video Card' },
+      { id: 'ram1', label: 'RAM 1' },
+      { id: 'ram2', label: 'RAM 2' },
       { id: 'storage', label: 'Storage' },
       { id: 'psu', label: 'PSU' },
       { id: 'cooler', label: 'CPU Cooler' },
@@ -460,7 +474,8 @@
       cpu: null,
       mobo: null,
       gpu: null,
-      ram: null,
+      ram1: null,
+      ram2: null,
       storage: null,
       psu: null,
       cooler: null,
@@ -575,14 +590,23 @@
     function addToBuild(categoryKey, itemId) {
       const product = (database[categoryKey] || []).find(p => p.id === itemId);
       if (product) {
-        currentBuild[categoryKey] = product;
+        if (categoryKey === 'ram') {
+          // If RAM 1 is empty, fill it. Otherwise, fill RAM 2.
+          if (!currentBuild.ram1) {
+            currentBuild.ram1 = product;
+          } else {
+            currentBuild.ram2 = product;
+          }
+        } else {
+          currentBuild[categoryKey] = product;
+        }
         updateBuildSidebar();
       }
     }
 
     // Remove component from slot
-    function removeFromBuild(categoryKey) {
-      currentBuild[categoryKey] = null;
+    function removeFromBuild(slotId) {
+      currentBuild[slotId] = null;
       updateBuildSidebar();
     }
 
@@ -598,8 +622,8 @@
       let totalPrice = 0;
       let selectedCount = 0;
 
-      container.innerHTML = categories.map(cat => {
-        const item = currentBuild[cat.id];
+      container.innerHTML = buildSlots.map(slot => {
+        const item = currentBuild[slot.id];
         if (item) {
           totalPrice += item.price;
           selectedCount++;
@@ -608,12 +632,12 @@
             <div class="py-2 flex items-center justify-between gap-2">
               <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-2">
-                  <button onclick="removeFromBuild('${cat.id}')" class="text-zinc-500 hover:text-red-400 transition text-[11px]">
+                  <button onclick="removeFromBuild('${slot.id}')" class="text-zinc-500 hover:text-red-400 transition text-[11px]">
                     <i class="fa-solid fa-xmark"></i>
                   </button>
                   <span class="font-bold text-white text-xs truncate">${item.name}</span>
                 </div>
-                <p class="text-[10px] text-zinc-500 pl-4">${cat.label}</p>
+                <p class="text-[10px] text-zinc-500 pl-4">${slot.label}</p>
               </div>
               <div class="flex items-center gap-2 shrink-0">
                 <span class="font-semibold text-white text-xs">${priceDisplay}</span>
@@ -626,14 +650,14 @@
         } else {
           return `
             <div class="py-2 flex items-center justify-between text-zinc-500">
-              <span class="uppercase tracking-wider font-semibold text-[10px]">${cat.label}</span>
+              <span class="uppercase tracking-wider font-semibold text-[10px]">${slot.label}</span>
               <span class="text-zinc-600 text-[11px]">Not selected</span>
             </div>
           `;
         }
       }).join('');
 
-      document.getElementById('build-count').textContent = `${selectedCount}/${categories.length}`;
+      document.getElementById('build-count').textContent = `${selectedCount}/${buildSlots.length}`;
       document.getElementById('build-total-price').textContent = `₱${totalPrice.toLocaleString()}`;
     }
 
@@ -661,17 +685,17 @@
       alert("Build configuration saved locally to your browser.");
     }
 
-    // NEW SHARE FEATURE: Copies text summary to clipboard
+    // Share feature: Copies text summary to clipboard
     function shareBuildPrompt() {
       let text = "My PC Build\n-------------------------\n";
       let totalPrice = 0;
       let count = 0;
 
-      categories.forEach(cat => {
-        const item = currentBuild[cat.id];
+      buildSlots.forEach(slot => {
+        const item = currentBuild[slot.id];
         if (item) {
           const priceDisplay = item.price > 0 ? `₱${item.price.toLocaleString()}` : "N/A";
-          text += `${cat.label}: ${item.name} - ${priceDisplay}\n`;
+          text += `${slot.label}: ${item.name} - ${priceDisplay}\n`;
           totalPrice += item.price;
           count++;
         }
