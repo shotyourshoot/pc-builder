@@ -121,8 +121,9 @@
             <button onclick="saveBuildPrompt()" class="flex items-center justify-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 py-2 rounded-lg text-xs font-semibold transition text-zinc-300 hover:text-white">
               <i class="fa-regular fa-bookmark text-zinc-400"></i> Save build
             </button>
+            <!-- Updated Share Button -->
             <button onclick="shareBuildPrompt()" class="flex items-center justify-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 py-2 rounded-lg text-xs font-semibold transition text-zinc-300 hover:text-white">
-              <i class="fa-solid fa-share-nodes text-zinc-400"></i> Share build
+              <i class="fa-solid fa-copy text-zinc-400"></i> Copy List
             </button>
           </div>
 
@@ -657,9 +658,37 @@
       alert("Build configuration saved locally to your browser.");
     }
 
+    // NEW SHARE FEATURE: Copies text summary to clipboard
     function shareBuildPrompt() {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Sharable build link copied to clipboard!");
+      let text = "My PC Build\n-------------------------\n";
+      let totalPrice = 0;
+      let count = 0;
+
+      categories.forEach(cat => {
+        const item = currentBuild[cat.id];
+        if (item) {
+          const priceDisplay = item.price > 0 ? `₱${item.price.toLocaleString()}` : "N/A";
+          text += `${cat.label}: ${item.name} - ${priceDisplay}\n`;
+          totalPrice += item.price;
+          count++;
+        }
+      });
+
+      if (count === 0) {
+        alert("Your build is empty! Add some parts first.");
+        return;
+      }
+
+      text += "-------------------------\n";
+      text += `TOTAL: ₱${totalPrice.toLocaleString()}\n\n`;
+      text += `Build your own at RigCraft PH`;
+
+      // Copy text to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Build list copied to clipboard! You can now paste it anywhere.");
+      }).catch(err => {
+        alert("Failed to copy. Please try again.");
+      });
     }
 
     // Initial Load
