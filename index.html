@@ -95,7 +95,7 @@
         <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
           <h2 class="text-sm font-bold text-white flex items-center gap-2">
             <span>Your Build</span>
-            <span id="build-count" class="text-xs px-2 py-0.5 rounded-full bg-blue-950 text-blue-400 border border-blue-800/40">0/9</span>
+            <span id="build-count" class="text-xs px-2 py-0.5 rounded-full bg-blue-950 text-blue-400 border border-blue-800/40">0/10</span>
           </h2>
           <button onclick="clearAllBuild()" class="text-xs text-red-400 hover:text-red-300 font-medium transition">Clear all</button>
         </div>
@@ -183,7 +183,7 @@
 
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
-    // Categories List matching your screenshot
+    // 10 Categories List
     const categories = [
       { id: 'cpu', label: 'CPU' },
       { id: 'mobo', label: 'Motherboard' },
@@ -193,159 +193,265 @@
       { id: 'psu', label: 'PSU' },
       { id: 'cooler', label: 'CPU Cooler' },
       { id: 'case', label: 'Case' },
-      { id: 'fan', label: 'Case Fan' }
+      { id: 'fan', label: 'Case Fan' },
+      { id: 'monitor', label: 'Monitor' }
     ];
 
-    // Products Database (Customizable with your Shopee affiliate URLs)
+    const IMG = {
+      cpu: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&q=60",
+      mobo: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&q=60",
+      gpu: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150&q=60",
+      ram: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=150&q=60",
+      storage: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=150&q=60",
+      psu: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150&q=60",
+      cooler: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&q=60",
+      case: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150&q=60",
+      fan: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&q=60",
+      monitor: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=150&q=60"
+    };
+
+    // Full Parts Database
     const database = {
       cpu: [
-        {
-          id: "cpu-1",
-          name: "AMD Ryzen 3 3200G",
-          brand: "AMD",
-          price: 2708,
-          image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&auto=format&fit=crop&q=60",
-          specs: { Socket: "AM4", Cores: "4-Core / 4-Thread", Graphics: "Radeon Vega 8" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        },
-        {
-          id: "cpu-2",
-          name: "AMD Ryzen 5 5600",
-          brand: "AMD",
-          price: 6490,
-          image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&auto=format&fit=crop&q=60",
-          specs: { Socket: "AM4", Cores: "6-Core / 12-Thread", BaseClock: "3.5 GHz" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        },
-        {
-          id: "cpu-3",
-          name: "Intel Core i5-13400F",
-          brand: "Intel",
-          price: 11400,
-          image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&auto=format&fit=crop&q=60",
-          specs: { Socket: "LGA1700", Cores: "10-Core (6P+4E)", BaseClock: "2.5 GHz" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "c1", name: "AMD Ryzen 9 9950X3D", brand: "AMD", price: 45949, image: IMG.cpu, specs: { Socket: "AM5", Cores: "16-C/32-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/8Koxe6JsVj" },
+        { id: "c2", name: "AMD Ryzen 9 9900X3D", brand: "AMD", price: 39999, image: IMG.cpu, specs: { Socket: "AM5", Cores: "12-C/24-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/50YVg0mSuH" },
+        { id: "c3", name: "AMD Ryzen 7 9800X3D", brand: "AMD", price: 31599, image: IMG.cpu, specs: { Socket: "AM5", Cores: "8-C/16-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/9pdlRMZwwh" },
+        { id: "c4", name: "AMD Ryzen 9 9950X", brand: "AMD", price: 33599, image: IMG.cpu, specs: { Socket: "AM5", Cores: "16-C/32-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/2gAauG3XEv" },
+        { id: "c5", name: "AMD Ryzen 9 9900X", brand: "AMD", price: 25599, image: IMG.cpu, specs: { Socket: "AM5", Cores: "12-C/24-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/9V0v3084M6" },
+        { id: "c6", name: "AMD Ryzen 7 9700X", brand: "AMD", price: 17999, image: IMG.cpu, specs: { Socket: "AM5", Cores: "8-C/16-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/8V8NrmjkR7" },
+        { id: "c7", name: "AMD Ryzen 5 9600X", brand: "AMD", price: 12795, image: IMG.cpu, specs: { Socket: "AM5", Cores: "6-C/12-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/9zxBf2V9uD" },
+        { id: "c8", name: "AMD Ryzen 7 8700G", brand: "AMD", price: 17999, image: IMG.cpu, specs: { Socket: "AM5", Cores: "8-C/16-T", Graphics: "Radeon 780M" }, affiliateUrl: "https://s.shopee.ph/8V8NsP3Jwm" },
+        { id: "c9", name: "AMD Ryzen 5 8600G", brand: "AMD", price: 13789, image: IMG.cpu, specs: { Socket: "AM5", Cores: "6-C/12-T", Graphics: "Radeon 760M" }, affiliateUrl: "https://s.shopee.ph/7VFqgh8QvT" },
+        { id: "c10", name: "AMD Ryzen 5 8500G", brand: "AMD", price: 11998, image: IMG.cpu, specs: { Socket: "AM5", Cores: "6-C/12-T", Graphics: "Radeon 740M" }, affiliateUrl: "https://s.shopee.ph/2LXkYSZi84" },
+        { id: "c11", name: "AMD Ryzen 7 8700F", brand: "AMD", price: 10599, image: IMG.cpu, specs: { Socket: "AM5", Cores: "8-C/16-T", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/AKa25jLup1" },
+        { id: "c12", name: "AMD Ryzen 5 8400F", brand: "AMD", price: 7699, image: IMG.cpu, specs: { Socket: "AM5", Cores: "6-C/12-T", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/6fgjj9nQw1" },
+        { id: "c13", name: "AMD Ryzen 9 7950X3D", brand: "AMD", price: 42795, image: IMG.cpu, specs: { Socket: "AM5", Cores: "16-C/32-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/1LfDNVaH4Z" },
+        { id: "c14", name: "AMD Ryzen 9 7900X3D", brand: "AMD", price: 32395, image: IMG.cpu, specs: { Socket: "AM5", Cores: "12-C/24-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/qiwmd6a32" },
+        { id: "c15", name: "AMD Ryzen 7 7800X3D", brand: "AMD", price: 20595, image: IMG.cpu, specs: { Socket: "AM5", Cores: "8-C/16-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/3B6rYyZfeD" },
+        { id: "c16", name: "AMD Ryzen 9 7900", brand: "AMD", price: 22295, image: IMG.cpu, specs: { Socket: "AM5", Cores: "12-C/24-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/amd-ryzen-9-7900-processor" },
+        { id: "c17", name: "AMD Ryzen 7 7700", brand: "AMD", price: 13699, image: IMG.cpu, specs: { Socket: "AM5", Cores: "8-C/16-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/8fRo8dMuJ4" },
+        { id: "c18", name: "AMD Ryzen 5 7600", brand: "AMD", price: 12599, image: IMG.cpu, specs: { Socket: "AM5", Cores: "6-C/12-T", Graphics: "Radeon (2 CUs)" }, affiliateUrl: "https://s.shopee.ph/4qF5Zg48oJ" },
+        { id: "c19", name: "AMD Ryzen 5 7500F", brand: "AMD", price: 8459, image: IMG.cpu, specs: { Socket: "AM5", Cores: "6-C/12-T", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/6VNJYpDNK4" },
+        { id: "c20", name: "AMD Ryzen 9 5900XT", brand: "AMD", price: 19230, image: IMG.cpu, specs: { Socket: "AM4", Cores: "16-C/32-T", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/7KwQYQSBBi" },
+        { id: "c21", name: "AMD Ryzen 7 5800XT", brand: "AMD", price: 14999, image: IMG.cpu, specs: { Socket: "AM4", Cores: "8-C/16-T", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/8KoxkjbPGV" },
+        { id: "c22", name: "AMD Ryzen 7 5700X3D", brand: "AMD", price: 11495, image: IMG.cpu, specs: { Socket: "AM4", Cores: "8-C/16-T", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/AKa28cyMFC" },
+        { id: "c23", name: "AMD Ryzen 5 5600GT", brand: "AMD", price: 9669, image: IMG.cpu, specs: { Socket: "AM4", Cores: "6-C/12-T", Graphics: "Radeon Vega 7" }, affiliateUrl: "https://s.shopee.ph/7pshF4UocE" },
+        { id: "c24", name: "AMD Ryzen 5 5500GT", brand: "AMD", price: 5949, image: IMG.cpu, specs: { Socket: "AM4", Cores: "6-C/12-T", Graphics: "Radeon Vega 7" }, affiliateUrl: "https://s.shopee.ph/qiwuH7WoN" },
+        { id: "c25", name: "Intel Core Ultra 9 285K / 285", brand: "Intel", price: 44999, image: IMG.cpu, specs: { Socket: "LGA 1851", Cores: "24-C (8P+16E)", Graphics: "Intel Graphics" }, affiliateUrl: "https://s.shopee.ph/LmgJROFqV" },
+        { id: "c26", name: "Intel Core Ultra 7 265K / 265", brand: "Intel", price: 20999, image: IMG.cpu, specs: { Socket: "LGA 1851", Cores: "20-C (8P+12E)", Graphics: "Intel Graphics" }, affiliateUrl: "https://s.shopee.ph/AAGc1Ylsox" },
+        { id: "c27", name: "Intel Core Ultra 7 265KF", brand: "Intel", price: 22995, image: IMG.cpu, specs: { Socket: "LGA 1851", Cores: "20-C (8P+12E)", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/AKa2DtkRNb" },
+        { id: "c28", name: "Intel Core Ultra 5 245K / 245", brand: "Intel", price: 16499, image: IMG.cpu, specs: { Socket: "LGA 1851", Cores: "14-C (6P+8E)", Graphics: "Intel Graphics" }, affiliateUrl: "https://s.shopee.ph/8AVXdyHsL9" },
+        { id: "c29", name: "Intel Core Ultra 5 245KF", brand: "Intel", price: 19995, image: IMG.cpu, specs: { Socket: "LGA 1851", Cores: "14-C (6P+8E)", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/AAGc1g6hhQ" },
+        { id: "c30", name: "Intel Core Ultra 5 225", brand: "Intel", price: 12799, image: IMG.cpu, specs: { Socket: "LGA 1851", Cores: "10-C (6P+4E)", Graphics: "Intel Graphics" }, affiliateUrl: "https://s.shopee.ph/gPWiGUrhP" },
+        { id: "c31", name: "Intel Core Ultra 5 225F", brand: "Intel", price: 13042, image: IMG.cpu, specs: { Socket: "LGA 1851", Cores: "10-C (6P+4E)", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/1VydhpjRiO" },
+        { id: "c32", name: "Intel Core i9-14900KS", brand: "Intel", price: 43150, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "24-C (8P+16E)", Graphics: "UHD 770" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/products/intel-core-i9-14900ks-processor" },
+        { id: "c33", name: "Intel Core i9-14900K", brand: "Intel", price: 33950, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "24-C (8P+16E)", Graphics: "UHD 770" }, affiliateUrl: "https://s.shopee.ph/8AVXeGbHHD" },
+        { id: "c34", name: "Intel Core i9-14900KF", brand: "Intel", price: 28995, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "24-C (8P+16E)", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/2VrAtskDa6" },
+        { id: "c35", name: "Intel Core i7-14700K", brand: "Intel", price: 28995, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "20-C (8P+12E)", Graphics: "UHD 770" }, affiliateUrl: "https://s.shopee.ph/3g38I3qAtN" },
+        { id: "c35b", name: "Intel Core i7-14700KF", brand: "Intel", price: 0, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "20-C (8P+12E)", Graphics: "None" }, affiliateUrl: "#" },
+        { id: "c36", name: "Intel Core i5-14600K", brand: "Intel", price: 20794, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "14-C (6P+8E)", Graphics: "UHD 770" }, affiliateUrl: "https://s.shopee.ph/8AVXeRAHm1" },
+        { id: "c37", name: "Intel Core i5-14600KF", brand: "Intel", price: 25921, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "14-C (6P+8E)", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/7VFqsfl08w" },
+        { id: "c38", name: "Intel Core i5-14500", brand: "Intel", price: 16400, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "14-C (6P+8E)", Graphics: "UHD 770" }, affiliateUrl: "https://s.shopee.ph/3Vji7m236R" },
+        { id: "c39", name: "Intel Core i5-14400", brand: "Intel", price: 12995, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "10-C (6P+4E)", Graphics: "UHD 730" }, affiliateUrl: "https://s.shopee.ph/5Arw6uBkvR" },
+        { id: "c40", name: "Intel Core i5-14400F", brand: "Intel", price: 11302, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "10-C (6P+4E)", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/3Vji8iEEKX" },
+        { id: "c41", name: "Intel Core i3-14100", brand: "Intel", price: 12990, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "4-C (4P)", Graphics: "UHD 730" }, affiliateUrl: "https://s.shopee.ph/W66ZEolBg" },
+        { id: "c42", name: "Intel Core i3-14100F", brand: "Intel", price: 12527, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "4-C (4P)", Graphics: "None" }, affiliateUrl: "https://s.shopee.ph/70JaJCvvCd" },
+        { id: "c43", name: "Intel Core i9-13900KS", brand: "Intel", price: 41450, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "24-C (8P+16E)", Graphics: "UHD 770" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/intel-core-i9-13900ks-processor-bx8071513900ks" },
+        { id: "c44", name: "Intel Core i9-13900F", brand: "Intel", price: 34795, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "24-C (8P+16E)", Graphics: "None" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/intel-core-i9-13900f-processor-bx8071513900f" },
+        { id: "c45", name: "Intel Core i7-13700 / 13700F", brand: "Intel", price: 26430, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "16-C (8P+8E)", Graphics: "Varies" }, affiliateUrl: "https://s.shopee.ph/2gAb9N3Y8R" },
+        { id: "c46", name: "Intel Core i5-13600 / 13500", brand: "Intel", price: 19952, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "14-C (6P+8E)", Graphics: "UHD 770" }, affiliateUrl: "https://s.shopee.ph/2gAb9SfKmQ" },
+        { id: "c47", name: "Intel Core i5-13400 / 13400F", brand: "Intel", price: 13736, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "10-C (6P+4E)", Graphics: "Varies" }, affiliateUrl: "https://s.shopee.ph/1gI3xfV8rM" },
+        { id: "c48", name: "Intel Core i3-13100 / 13100F", brand: "Intel", price: 12990, image: IMG.cpu, specs: { Socket: "LGA 1700", Cores: "4-C (4P)", Graphics: "Varies" }, affiliateUrl: "https://s.shopee.ph/9pdlgh7YOm" }
       ],
       mobo: [
-        {
-          id: "mobo-1",
-          name: "Ramsta RS-A320MP",
-          brand: "Ramsta",
-          price: 2400,
-          image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&auto=format&fit=crop&q=60",
-          specs: { Socket: "AM4", Chipset: "AMD A320", RAM: "DDR4", "Form factor": "Micro ATX" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        },
-        {
-          id: "mobo-2",
-          name: "Colorful BATTLE-AX A520M-K M.2 V14",
-          brand: "Colorful",
-          price: 2750,
-          image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&auto=format&fit=crop&q=60",
-          specs: { Socket: "AM4", Chipset: "AMD A520", RAM: "DDR4", "Form factor": "Micro ATX" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        },
-        {
-          id: "mobo-3",
-          name: "Asus PRIME A520M-K/CSM",
-          brand: "Asus",
-          price: 2833,
-          image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&auto=format&fit=crop&q=60",
-          specs: { Socket: "AM4", Chipset: "AMD A520", RAM: "DDR4", "Form factor": "Micro ATX", Color: "Black / Silver" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        },
-        {
-          id: "mobo-4",
-          name: "Gigabyte A520M K V2",
-          brand: "Gigabyte",
-          price: 2836,
-          image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&auto=format&fit=crop&q=60",
-          specs: { Socket: "AM4", Chipset: "AMD A520", RAM: "DDR4", "Form factor": "Micro ATX", Color: "Brown / Black" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "m1", name: "ASUS ROG Crosshair X870E Hero", brand: "ASUS", price: 38995, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD X870E", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/products/asus-rog-crosshair-x870e-hero-ddr5-motherboard" },
+        { id: "m2", name: "MSI MPG X870E Carbon WiFi", brand: "MSI", price: 32609, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD X870E", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://s.shopee.ph/gPZzpjfKT" },
+        { id: "m3", name: "Gigabyte X870E AORUS Master", brand: "Gigabyte", price: 31550, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD X870E", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-x870e-aorus-master-ddr5-amd-gaming-motherboard" },
+        { id: "m4", name: "ASUS TUF Gaming X870-PLUS WiFi", brand: "ASUS", price: 20795, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD X870", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asus-tuf-gaming-x870-plus-wifi-ddr5-motherboard" },
+        { id: "m5", name: "Gigabyte X870 AORUS Elite WiFi7", brand: "Gigabyte", price: 14595, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD X870", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-x870m-aorus-elite-wifi7-ddr5-amd-gaming-motherboard" },
+        { id: "m6", name: "ASRock X870 Steel Legend WiFi", brand: "ASRock", price: 16995, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD X870", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asrock-x870-steel-legend-wifi-ddr5-motherboard" },
+        { id: "m7", name: "MSI MAG B850 TOMAHAWK WIFI", brand: "MSI", price: 17742, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD B850", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://s.shopee.ph/60R6Lrpwsd" },
+        { id: "m8", name: "Gigabyte B850M GAMING X AX", brand: "Gigabyte", price: 9481, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD B850", RAM: "DDR5", Form: "Micro ATX" }, affiliateUrl: "https://s.shopee.ph/1LfGnLDeTN" },
+        { id: "m9", name: "ASRock B850 Pro RS", brand: "ASRock", price: 11250, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD B850", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asrock-b850m-pro-rs-wifi-amd-motherboard" },
+        { id: "m10", name: "ASUS TUF GAMING A620M-PLUS WIFI", brand: "ASUS", price: 7350, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD A620", RAM: "DDR5", Form: "Micro ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asus-tuf-gaming-a620m-plus-wifi-motherboard" },
+        { id: "m11", name: "ASRock A620M-HDV/M.2+", brand: "ASRock", price: 5495, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD A620", RAM: "DDR5", Form: "Micro ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asrock-a620m-hdv-m-2-ddr5-motherboard" },
+        { id: "m12", name: "MSI PRO A620M-E", brand: "MSI", price: 6488, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD A620", RAM: "DDR5", Form: "Micro ATX" }, affiliateUrl: "https://s.shopee.ph/7fZKL7qvMR" },
+        { id: "m13", name: "Gigabyte B650E AORUS ELITE X AX ICE", brand: "Gigabyte", price: 15450, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD B650E", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-b650e-aorus-elite-x-ax-ice-ddr5-motherboard" },
+        { id: "m14", name: "ASRock A620I LIGHTNING WIFI", brand: "ASRock", price: 9495, image: IMG.mobo, specs: { Socket: "AM5", Chipset: "AMD A620", RAM: "DDR5", Form: "Mini ITX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asrock-a620i-lightning-wifi-ddr5-phantom-gaming-am5-motherboard" },
+        { id: "m15", name: "ASUS ROG MAXIMUS Z890 HERO", brand: "ASUS", price: 43350, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel Z890", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asus-rog-maximus-z890-hero-btf-ddr5-intel-gaming-motherboard" },
+        { id: "m16", name: "MSI MEG Z890 ACE", brand: "MSI", price: 52899, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel Z890", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://s.shopee.ph/8fRrX7diQk" },
+        { id: "m17", name: "Gigabyte Z890 AORUS MASTER", brand: "Gigabyte", price: 40550, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel Z890", RAM: "DDR5", Form: "E-ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/products/gigabyte-z890-aorus-master-ddr5-intel-gaming-motherboard" },
+        { id: "m18", name: "ASRock Z890 Taichi", brand: "ASRock", price: 39436, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel Z890", RAM: "DDR5", Form: "E-ATX" }, affiliateUrl: "https://s.shopee.ph/4qF8y9i6ni" },
+        { id: "m19", name: "ASUS TUF GAMING Z890-PLUS WIFI", brand: "ASUS", price: 18048, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel Z890", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://s.shopee.ph/112QP851oj" },
+        { id: "m20", name: "MSI MAG B860 TOMAHAWK WIFI", brand: "MSI", price: 14995, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel B860", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/msi-mag-b860-tomahawk-wi-fi-ddr5-intel-motherboard" },
+        { id: "m21", name: "ASRock B860M Pro RS", brand: "ASRock", price: 10750, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel B860", RAM: "DDR5", Form: "Micro ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asrock-b860m-pro-rs-wifi-motherboard" },
+        { id: "m22", name: "Gigabyte B860 EAGLE AX", brand: "Gigabyte", price: 10695, image: IMG.mobo, specs: { Socket: "LGA 1851", Chipset: "Intel B860", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-b860-eagle-wifi6e-atx-intel-gaming-motherboard" },
+        { id: "m23", name: "ASUS ROG STRIX B760-F GAMING WIFI", brand: "ASUS", price: 13750, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asus-rog-strix-b760-f-gaming-wifi-motherboard" },
+        { id: "m24", name: "MSI MAG B760 TOMAHAWK WIFI", brand: "MSI", price: 13650, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/msi-mag-b760-tomahawk-wifi-ddr5-intel-motherboard" },
+        { id: "m25", name: "MSI MAG B760 TOMAHAWK WIFI DDR4", brand: "MSI", price: 13895, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR4", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/msi-mag-b760-tomahawk-wifi-ddr4-motherboard" },
+        { id: "m26", name: "Gigabyte B760 AORUS ELITE AX", brand: "Gigabyte", price: 12845, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://s.shopee.ph/6q0EyQ4I17" },
+        { id: "m27", name: "Gigabyte B760M DS3H AX", brand: "Gigabyte", price: 0, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR5", Form: "Micro ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-b760m-ds3h-wifi6e-gen5-ddr5-intel-ultra-durable-motherboard" },
+        { id: "m28", name: "Gigabyte B760M DS3H DDR4", brand: "Gigabyte", price: 7399, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR4", Form: "Micro ATX" }, affiliateUrl: "https://s.shopee.ph/50YanAy4Mq" },
+        { id: "m29", name: "ASRock B760M Steel Legend WiFi", brand: "ASRock", price: 9950, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR5", Form: "Micro ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asrock-b760m-steel-legend-wifi-motherboard" },
+        { id: "m30", name: "ASUS TUF GAMING B760M-PLUS WIFI D4", brand: "ASUS", price: 10676, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel B760", RAM: "DDR4", Form: "Micro ATX" }, affiliateUrl: "https://s.shopee.ph/80CCMmCCC8" },
+        { id: "m31", name: "ASUS ROG MAXIMUS Z790 DARK HERO", brand: "ASUS", price: 41495, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel Z790", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asus-rog-maximus-z790-dark-hero-gaming-motherboard" },
+        { id: "m32", name: "Gigabyte Z790 AORUS MASTER X", brand: "Gigabyte", price: 37450, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel Z790", RAM: "DDR5", Form: "E-ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-z790-aorus-master-x-gaming-motherboard" },
+        { id: "m33", name: "ASRock Z790 Nova WiFi", brand: "ASRock", price: 20695, image: IMG.mobo, specs: { Socket: "LGA 1700", Chipset: "Intel Z790", RAM: "DDR5", Form: "ATX" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/asrock-phantom-gaming-z790-nova-wifi-motherboard" }
       ],
       gpu: [
-        {
-          id: "gpu-1",
-          name: "Nvidia GeForce RTX 4060 8GB",
-          brand: "Zotac",
-          price: 18500,
-          image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150&auto=format&fit=crop&q=60",
-          specs: { VRAM: "8GB GDDR6", TDP: "115W", Interface: "PCIe 4.0" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "g1", name: "Nvidia GeForce RTX 4080 Super", brand: "ASUS", price: 67950, image: IMG.gpu, specs: { VRAM: "16GB GDDR6X", TDP: "320W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/gigabyte-geforce-rtx-4080-super/products/gigabyte-geforce-rtx-4080-super-windforce-v2-16gb-gddr6x-graphics-card" },
+        { id: "g2", name: "Nvidia GeForce RTX 4070 Ti Super", brand: "MSI", price: 57950, image: IMG.gpu, specs: { VRAM: "16GB GDDR6X", TDP: "285W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-geforce-rtx-4070-ti-super-aero-oc-16gb-gddr6x-graphics-card" },
+        { id: "g3", name: "Nvidia GeForce RTX 4070 Super", brand: "Gigabyte", price: 41895, image: IMG.gpu, specs: { VRAM: "12GB GDDR6X", TDP: "220W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/copy-of-asus-dual-geforce-rtx-4070-super-oc-12gb-gddr6x-graphics-card-black" },
+        { id: "g4", name: "Nvidia GeForce RTX 4070 Ti", brand: "PNY", price: 49450, image: IMG.gpu, specs: { VRAM: "12GB GDDR6X", TDP: "285W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/colorful-geforce-rtx-4070-ti-nb-ex-v-12gb-gddr6x-graphics-card" },
+        { id: "g5", name: "Nvidia GeForce RTX 4070", brand: "Palit", price: 44195, image: IMG.gpu, specs: { VRAM: "12GB GDDR6X", TDP: "200W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/colorful-igame-geforce-rtx-4070-vulcan-oc-v-12gb-gddr6x-graphics-card" },
+        { id: "g6", name: "Nvidia GeForce RTX 4060 Ti 16GB", brand: "Gainward", price: 27350, image: IMG.gpu, specs: { VRAM: "16GB GDDR6", TDP: "165W", Interface: "PCIe 4.0 x8" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/palit-geforce-rtx-4060-ti-jetstream-16gb-gddr6-graphics-card" },
+        { id: "g7", name: "Nvidia GeForce RTX 4060 Ti 8GB", brand: "Galax", price: 22995, image: IMG.gpu, specs: { VRAM: "8GB GDDR6", TDP: "160W", Interface: "PCIe 4.0 x8" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/colorful-geforce-rtx-4060-ti-nb-duo-8gb-v-gddr6-graphics-card" },
+        { id: "g8", name: "Nvidia GeForce RTX 4060 8GB", brand: "Zotac", price: 20996, image: IMG.gpu, specs: { VRAM: "8GB GDDR6", TDP: "115W", Interface: "PCIe 4.0 x8" }, affiliateUrl: "https://s.shopee.ph/2BEVL0PzaF" },
+        { id: "g9", name: "Nvidia GeForce RTX 3050 6GB", brand: "Inno3D", price: 15775, image: IMG.gpu, specs: { VRAM: "6GB GDDR6", TDP: "70W", Interface: "PCIe 4.0 x8" }, affiliateUrl: "https://s.shopee.ph/AKaD441jYR" },
+        { id: "g10", name: "AMD Radeon RX 7900 GRE", brand: "Sapphire", price: 42750, image: IMG.gpu, specs: { VRAM: "16GB GDDR6", TDP: "260W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/sapphire-pure-amd-radeon-rx-7900-gre-gaming-oc-16gb-gddr6-dual-hdmi-dual-dp-graphics-card" },
+        { id: "g11", name: "AMD Radeon RX 7800 XT", brand: "PowerColor", price: 34995, image: IMG.gpu, specs: { VRAM: "16GB GDDR6", TDP: "263W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/sapphire-nitro-amd-radeon-rx-7800-xt-gaming-oc-16gb-gddr6-dual-hdmi-dual-dp-graphics-card" },
+        { id: "g12", name: "AMD Radeon RX 7700 XT", brand: "XFX", price: 28350, image: IMG.gpu, specs: { VRAM: "12GB GDDR6", TDP: "245W", Interface: "PCIe 4.0 x16" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/sapphire-nitro-amd-radeon-rx-7700-xt-gaming-oc-12gb-gddr6-dual-hdmi-dual-dp-graphics-card-1" },
+        { id: "g13", name: "AMD Radeon RX 7600 XT", brand: "ASRock", price: 21945, image: IMG.gpu, specs: { VRAM: "16GB GDDR6", TDP: "190W", Interface: "PCIe 4.0 x8" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/sapphire-pulse-amd-radeon-rx-7600-xt-gaming-oc-16gb-gddr6-graphics-card" },
+        { id: "g14", name: "AMD Radeon RX 7600", brand: "Gigabyte", price: 19950, image: IMG.gpu, specs: { VRAM: "8GB GDDR6", TDP: "165W", Interface: "PCIe 4.0 x8" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/gigabyte-amd-radeon-rx-7600-gaming-oc-8gb-gddr6-graphics-card" },
+        { id: "g15", name: "Intel Arc B580", brand: "Sparkle", price: 16750, image: IMG.gpu, specs: { VRAM: "12GB GDDR6", TDP: "190W", Interface: "PCIe 4.0 x8" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/intel-arc-b580-12gb-gddr6-graphics-card" }
       ],
       ram: [
-        {
-          id: "ram-1",
-          name: "Kingston Fury Beast 16GB (2x8GB) 3200MHz",
-          brand: "Kingston",
-          price: 2250,
-          image: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=150&auto=format&fit=crop&q=60",
-          specs: { Type: "DDR4", Capacity: "16GB Kit", Speed: "3200 MT/s" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "r1", name: "Corsair Dominator Titanium RGB 32GB 7200MHz", brand: "Corsair", price: 36342, image: IMG.ram, specs: { Type: "DDR5", Capacity: "32GB (2x16GB)", Speed: "7200 MT/s" }, affiliateUrl: "https://s.shopee.ph/8V8YtNRhXY" },
+        { id: "r2", name: "Corsair Vengeance RGB 48GB 6000MHz", brand: "Corsair", price: 37724, image: IMG.ram, specs: { Type: "DDR5", Capacity: "32GB (2x16GB)", Speed: "6000 MT/s" }, affiliateUrl: "https://s.shopee.ph/3g3JUHSKna" },
+        { id: "r3", name: "G.Skill Trident Z5 Royal 32GB 8000MHz", brand: "G.Skill", price: 32936, image: IMG.ram, specs: { Type: "DDR5", Capacity: "32GB (2x16GB)", Speed: "8000 MT/s" }, affiliateUrl: "https://s.shopee.ph/8Kp92teyIJ" },
+        { id: "r4", name: "G.Skill Trident Z5 Neo RGB 64GB 6000MHz", brand: "G.Skill", price: 66999, image: IMG.ram, specs: { Type: "DDR5", Capacity: "64GB (2x32GB)", Speed: "6000 MT/s" }, affiliateUrl: "https://s.shopee.ph/3g3JUNOsbG" },
+        { id: "r5", name: "Kingston Fury Renegade RGB 96GB 6400MHz", brand: "Kingston", price: 5095, image: IMG.ram, specs: { Type: "DDR5", Capacity: "16GB (1x16GB)", Speed: "6400 MT/s" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/kingston-fury-renegade-16gb-1x16gb-ddr5-rgb-xmp-6400mt-s-cl32-memory-white-kf564c32rwa-16" },
+        { id: "r6", name: "Kingston Fury Beast RGB 32GB 6000MHz", brand: "Kingston", price: 43151, image: IMG.ram, specs: { Type: "DDR5", Capacity: "32GB (2x16GB)", Speed: "6000 MT/s" }, affiliateUrl: "https://s.shopee.ph/9fKWde4ZXF" },
+        { id: "r7", name: "Crucial Pro 32GB 5600MHz", brand: "Crucial", price: 27795, image: IMG.ram, specs: { Type: "DDR5", Capacity: "32GB (2x16GB)", Speed: "5600 MT/s" }, affiliateUrl: "https://s.shopee.ph/3g3JUhYXMj" },
+        { id: "r8", name: "TeamGroup T-Force Delta RGB 48GB 3200MHz", brand: "TeamGroup", price: 7715, image: IMG.ram, specs: { Type: "DDR4", Capacity: "8GB (1x8GB)", Speed: "3200 MT/s" }, affiliateUrl: "https://s.shopee.ph/2BEVi6j93X" },
+        { id: "r9", name: "TeamGroup T-Create Expert 16GB 3600MHz", brand: "TeamGroup", price: 7495, image: IMG.ram, specs: { Type: "DDR4", Capacity: "16GB (2x32GB)", Speed: "3600 MT/s" }, affiliateUrl: "https://ecommerce.datablitz.com.ph/collections/all/products/teamgroup-t-create-expert-16gb-2x8gb-ddr4-3600mhz-cl18-22-22-42-1-35v-desktop-memory-titanium-grey-ttced416g3600hc18jdc01" },
+        { id: "r10", name: "Patriot Viper Venom RGB 16GB 6000MHz", brand: "Patriot", price: 16989, image: IMG.ram, specs: { Type: "DDR5", Capacity: "16GB (1x16GB)", Speed: "6000 MT/s" }, affiliateUrl: "https://s.shopee.ph/9AOG37nmeA" },
+        { id: "r11", name: "ADATA XPG Lancer Blade RGB 32GB 6000MHz", brand: "ADATA", price: 23272, image: IMG.ram, specs: { Type: "DDR5", Capacity: "32GB (2x16GB)", Speed: "6000 MT/s" }, affiliateUrl: "https://s.shopee.ph/qj87uu8Ez" },
+        { id: "r12", name: "Lexar ARES RGB 32GB 6400MHz", brand: "Lexar", price: 20611, image: IMG.ram, specs: { Type: "DDR5", Capacity: "32GB (2x16GB)", Speed: "7200 MT/s" }, affiliateUrl: "https://s.shopee.ph/2LXvur2GRs" },
+        { id: "r13", name: "Kingston Fury Beast Special Edition 16GB", brand: "Kingston", price: 15999, image: IMG.ram, specs: { Type: "DDR4", Capacity: "16GB (1x16GB)", Speed: "3200 MT/s" }, affiliateUrl: "https://s.shopee.ph/5q7o5LAcYq" },
+        { id: "r14", name: "Lexar THOR 32GB 3200MHz", brand: "Lexar", price: 10999, image: IMG.ram, specs: { Type: "DDR4", Capacity: "16GB (2x8GB)", Speed: "3200 MT/s" }, affiliateUrl: "https://s.shopee.ph/3LQT6oYg3L" },
+        { id: "r15", name: "TeamGroup T-Force Vulcan Z 32GB 3200MHz", brand: "TeamGroup", price: 9595, image: IMG.ram, specs: { Type: "DDR4", Capacity: "16GB (2x8GB)", Speed: "3200 MT/s" }, affiliateUrl: "https://s.shopee.ph/3qMjhq3xbT" },
+        { id: "r16", name: "Corsair Vengeance LPX 16GB 3200MHz", brand: "Corsair", price: 9099, image: IMG.ram, specs: { Type: "DDR4", Capacity: "32GB (1x16GB)", Speed: "3200 MT/s" }, affiliateUrl: "https://s.shopee.ph/7AdBg6nQeN" }
       ],
       storage: [
-        {
-          id: "storage-1",
-          name: "Kingston NV2 1TB PCIe 4.0 M.2 NVMe",
-          brand: "Kingston",
-          price: 3750,
-          image: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=150&auto=format&fit=crop&q=60",
-          specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "3500 MB/s" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "s1", name: "Crucial T705 4TB PCIe 5.0", brand: "Crucial", price: 70094, image: IMG.storage, specs: { Capacity: "4TB", Form: "M.2 2280", ReadSpeed: "14500 MB/s" }, affiliateUrl: "https://s.shopee.ph/5VUxz8yb2q" },
+        { id: "s2", name: "Crucial T705 2TB PCIe 5.0", brand: "Crucial", price: 41052, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "14500 MB/s" }, affiliateUrl: "https://s.shopee.ph/2VrMPgPZyr" },
+        { id: "s3", name: "Corsair MP600 PRO 1TB PCIe 5.0", brand: "Corsair", price: 17570, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "12400 MB/s" }, affiliateUrl: "https://s.shopee.ph/9V16lqYBy2" },
+        { id: "s4", name: "TeamGroup T-Force Cardea Z540 1TB", brand: "TeamGroup", price: 10977, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "12400 MB/s" }, affiliateUrl: "https://s.shopee.ph/50YhPjuUn3" },
+        { id: "s5", name: "TeamGroup T-Force Cardea Z540 500GB", brand: "TeamGroup", price: 6028, image: IMG.storage, specs: { Capacity: "500GB", Form: "M.2 2280", ReadSpeed: "12400 MB/s" }, affiliateUrl: "https://s.shopee.ph/50YhPjuUn3" },
+        { id: "s6", name: "Lexar NM1090 1TB PCIe 5.0", brand: "Lexar", price: 11390, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "12000 MB/s" }, affiliateUrl: "https://s.shopee.ph/7fZSanRf4o" },
+        { id: "s7", name: "MSI Spatium M570 Pro 2TB PCIe 5.0", brand: "MSI", price: 24999, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "12400 MB/s" }, affiliateUrl: "https://s.shopee.ph/4qFJcWhpHq" },
+        { id: "s8", name: "Samsung 990 PRO 4TB PCIe 4.0", brand: "Samsung", price: 48985, image: IMG.storage, specs: { Capacity: "4TB", Form: "M.2 2280", ReadSpeed: "7450 MB/s" }, affiliateUrl: "https://s.shopee.ph/gPkf0cB8r" },
+        { id: "s9", name: "Samsung 990 PRO 2TB PCIe 4.0", brand: "Samsung", price: 23735, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "7450 MB/s" }, affiliateUrl: "https://s.shopee.ph/gPkf0cB8r" },
+        { id: "s10", name: "Samsung 990 PRO 1TB PCIe 4.0", brand: "Samsung", price: 15500, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "7450 MB/s" }, affiliateUrl: "https://s.shopee.ph/gPkf0cB8r" },
+        { id: "s11", name: "Crucial T500 500GB PCIe 4.0", brand: "Crucial", price: 17446, image: IMG.storage, specs: { Capacity: "500GB", Form: "M.2 2280", ReadSpeed: "7400 MB/s" }, affiliateUrl: "https://s.shopee.ph/8V8bzj4g8S" },
+        { id: "s12", name: "Samsung 990 EVO Plus 2TB PCIe 4.0", brand: "Samsung", price: 42034, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "7250 MB/s" }, affiliateUrl: "https://s.shopee.ph/2BEYSFT0nd" },
+        { id: "s13", name: "Samsung 990 EVO Plus 1TB PCIe 4.0", brand: "Samsung", price: 21227, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "7250 MB/s" }, affiliateUrl: "https://s.shopee.ph/2BEYSFT0nd" },
+        { id: "s14", name: "Kingston NV3 2TB PCIe 4.0", brand: "Kingston", price: 21599, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "6000 MB/s" }, affiliateUrl: "https://s.shopee.ph/1LfRT7R6Vp" },
+        { id: "s15", name: "Kingston NV3 1TB PCIe 4.0", brand: "Kingston", price: 11995, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "6000 MB/s" }, affiliateUrl: "https://s.shopee.ph/1LfRT7R6Vp" },
+        { id: "s16", name: "Western Digital WD Blue SN5000 2TB", brand: "Western Digital", price: 20200, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "5150 MB/s" }, affiliateUrl: "https://s.shopee.ph/8fS2Ckyvbc" },
+        { id: "s17", name: "Western Digital WD Blue SN580 2TB", brand: "Western Digital", price: 12696, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "4150 MB/s" }, affiliateUrl: "https://s.shopee.ph/112b4oXtgk" },
+        { id: "s18", name: "Western Digital WD Blue SN580 1TB", brand: "Western Digital", price: 6816, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "4150 MB/s" }, affiliateUrl: "https://s.shopee.ph/112b4oXtgk" },
+        { id: "s19", name: "Lexar NQ780 1TB PCIe 4.0", brand: "Lexar", price: 11795, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "7400 MB/s" }, affiliateUrl: "https://s.shopee.ph/7psvDwxG9m" },
+        { id: "s20", name: "TeamGroup MP44 1TB PCIe 4.0", brand: "TeamGroup", price: 19227, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "7400 MB/s" }, affiliateUrl: "https://s.shopee.ph/9fKZQ4G2Vz" },
+        { id: "s21", name: "Corsair MP600 Elite 1TB PCIe 4.0", brand: "Corsair", price: 17570, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "7000 MB/s" }, affiliateUrl: "https://s.shopee.ph/8V8c26otL6" },
+        { id: "s22", name: "Crucial P310 2TB PCIe 4.0", brand: "Crucial", price: 12900, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "7100 MB/s" }, affiliateUrl: "https://s.shopee.ph/4AzcsOlaXs" },
+        { id: "s23", name: "Western Digital WD_BLACK SN770M 2TB", brand: "Western Digital", price: 20000, image: IMG.storage, specs: { Capacity: "2TB", Form: "M.2 2280", ReadSpeed: "7250 MB/s" }, affiliateUrl: "https://s.shopee.ph/3g3MHbksaV" },
+        { id: "s24", name: "Western Digital WD_BLACK SN770M 1TB", brand: "Western Digital", price: 14109, image: IMG.storage, specs: { Capacity: "1TB", Form: "M.2 2280", ReadSpeed: "7250 MB/s" }, affiliateUrl: "https://s.shopee.ph/4fvtTSy3pR" }
       ],
       psu: [
-        {
-          id: "psu-1",
-          name: "Corsair CV650 650W 80+ Bronze",
-          brand: "Corsair",
-          price: 3300,
-          image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150&auto=format&fit=crop&q=60",
-          specs: { Wattage: "650W", Rating: "80 PLUS Bronze", Modular: "Non-Modular" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "p1", name: "Corsair RM850x SHIFT 850W", brand: "Corsair", price: 9495, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/qjAycZHw2" },
+        { id: "p2", name: "Corsair RM1000x (ATX 3.1)", brand: "Corsair", price: 12195, image: IMG.psu, specs: { Wattage: "1000W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/80CLVzCqpJ" },
+        { id: "p3", name: "MSI MAG A850GL PCIE5", brand: "MSI", price: 6985, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/4VcTLcwAyd" },
+        { id: "p4", name: "MSI MEG Ai1300P PCIE5", brand: "MSI", price: 18995, image: IMG.psu, specs: { Wattage: "1300W", Rating: "80 PLUS Platinum", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/9AOIuPeNrG" },
+        { id: "p5", name: "Seasonic Focus GX-850 ATX 3.0", brand: "Seasonic", price: 9499, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/8KpBuvJac8" },
+        { id: "p6", name: "Seasonic Vertex GX-1000", brand: "Seasonic", price: 15695, image: IMG.psu, specs: { Wattage: "1000W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/5AsA9D6t5l" },
+        { id: "p7", name: "Seasonic Vertex GX-850", brand: "Seasonic", price: 13350, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/5AsA9D6t5l" },
+        { id: "p8", name: "Seasonic Vertex GX-750", brand: "Seasonic", price: 11750, image: IMG.psu, specs: { Wattage: "750W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/5AsA9D6t5l" },
+        { id: "p9", name: "be quiet! Straight Power 12 1000W", brand: "be quiet!", price: 12995, image: IMG.psu, specs: { Wattage: "1000W", Rating: "80 PLUS Platinum", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/8fS2K7dWhU" },
+        { id: "p10", name: "Thermaltake Toughpower GF3 1050W", brand: "Thermaltake", price: 9350, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/4LJ3AQ4g3d" },
+        { id: "p11", name: "ASUS TUF Gaming 850W Gold", brand: "ASUS", price: 9757, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/4LJ3AcHqE0" },
+        { id: "p12", name: "Corsair CX650 (2023)", brand: "Corsair", price: 3895, image: IMG.psu, specs: { Wattage: "650W", Rating: "80 PLUS Bronze", Modular: "Non-Modular" }, affiliateUrl: "https://s.shopee.ph/2BEYakiqe1" },
+        { id: "p13", name: "Corsair CX750 (2023)", brand: "Corsair", price: 4150, image: IMG.psu, specs: { Wattage: "750W", Rating: "80 PLUS Bronze", Modular: "Non-Modular" }, affiliateUrl: "https://s.shopee.ph/2BEYakiqe1" },
+        { id: "p14", name: "MSI MAG A650BN", brand: "MSI", price: 3385, image: IMG.psu, specs: { Wattage: "650W", Rating: "80 PLUS Bronze", Modular: "Non-Modular" }, affiliateUrl: "https://s.shopee.ph/2gApBoIkpo" },
+        { id: "p15", name: "Thermaltake Smart BX3 650W", brand: "Thermaltake", price: 3999, image: IMG.psu, specs: { Wattage: "650W", Rating: "80 PLUS Bronze", Modular: "Non-Modular" }, affiliateUrl: "https://s.shopee.ph/7AdEYAOQ99" },
+        { id: "p16", name: "DeepCool PL650D", brand: "DeepCool", price: 4320, image: IMG.psu, specs: { Wattage: "650W", Rating: "80 PLUS Bronze", Modular: "Non-Modular" }, affiliateUrl: "https://s.shopee.ph/7VG4wxF8MF" },
+        { id: "p17", name: "FSP Hydro K PRO 600W", brand: "FSP", price: 3975, image: IMG.psu, specs: { Wattage: "600W", Rating: "80 PLUS Bronze", Modular: "Non-Modular" }, affiliateUrl: "https://s.shopee.ph/7VG4x7NT55" },
+        { id: "p18", name: "Corsair SF850 (ATX 3.1)", brand: "Corsair", price: 12295, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Platinum", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/6L47Z5ccnC" },
+        { id: "p19", name: "Corsair SF1000 (ATX 3.1)", brand: "Corsair", price: 14495, image: IMG.psu, specs: { Wattage: "1000W", Rating: "80 PLUS Platinum", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/6L47Z5ccnC" },
+        { id: "p20", name: "Lian Li SP850", brand: "Lian Li", price: 7995, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Gold", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/5AsABIyRMN" },
+        { id: "p21", name: "SilverStone Extreme 850R Platinum", brand: "SilverStone", price: 13625, image: IMG.psu, specs: { Wattage: "850W", Rating: "80 PLUS Platinum", Modular: "Fully Modular" }, affiliateUrl: "https://s.shopee.ph/3VjwCILeYu" }
       ],
       cooler: [
-        {
-          id: "cooler-1",
-          name: "DeepCool AK400 Digital CPU Cooler",
-          brand: "DeepCool",
-          price: 1950,
-          image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&auto=format&fit=crop&q=60",
-          specs: { Type: "Air Cooler", Fans: "1x 120mm FDB", Height: "156mm" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "co1", name: "Noctua NH-D15 G2", brand: "Noctua", price: 9998, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 140mm", Height: "168mm" }, affiliateUrl: "https://s.shopee.ph/1gII1R1osW" },
+        { id: "co2", name: "DeepCool Assassin IV", brand: "DeepCool", price: 5995, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "140mm + 120mm", Height: "164mm" }, affiliateUrl: "https://s.shopee.ph/7VG4yFZkf4" },
+        { id: "co3", name: "DeepCool AK620 Digital", brand: "DeepCool", price: 2895, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 120mm FDB", Height: "162mm" }, affiliateUrl: "https://s.shopee.ph/2qUFQ2ZI0w" },
+        { id: "co4", name: "Corsair A115", brand: "Corsair", price: 9634, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 140mm PWM", Height: "165mm" }, affiliateUrl: "https://s.shopee.ph/LmuRU3irL" },
+        { id: "co5", name: "Thermalright Phantom Spirit 120 EVO", brand: "Thermalright", price: 2399, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 120mm", Height: "157mm" }, affiliateUrl: "https://s.shopee.ph/8plSZBe8xE" },
+        { id: "co6", name: "Thermalright Phantom Spirit 120 SE", brand: "Thermalright", price: 4055, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 120mm", Height: "154mm" }, affiliateUrl: "https://s.shopee.ph/2VrP1bIR0t" },
+        { id: "co7", name: "ID-COOLING Frozn A620 PRO SE", brand: "ID-COOLING", price: 2370, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 120mm", Height: "157mm" }, affiliateUrl: "https://s.shopee.ph/9KhjANfcG8" },
+        { id: "co8", name: "DeepCool AK400 Digital", brand: "DeepCool", price: 1785, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "1x 120mm", Height: "156mm" }, affiliateUrl: "https://s.shopee.ph/60RHCMJIzf" },
+        { id: "co9", name: "Arctic Freezer 36", brand: "Arctic", price: 2054, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 120mm P12", Height: "159mm" }, affiliateUrl: "https://s.shopee.ph/9zxPxr4I95" },
+        { id: "co10", name: "Thermalright Assassin Spirit 120 V2 PLUS", brand: "Thermalright", price: 1130, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "2x 120mm", Height: "154mm" }, affiliateUrl: "https://s.shopee.ph/3qMmcYDtkA" },
+        { id: "co11", name: "Thermalright Peerless Assassin 120 Mini", brand: "Thermalright", price: 2280, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "1x 120mm", Height: "135mm" }, affiliateUrl: "https://s.shopee.ph/112bFONsvp" },
+        { id: "co12", name: "ID-COOLING Frozn A410 TD", brand: "ID-COOLING", price: 1752, image: IMG.cooler, specs: { Type: "Air Cooler", Fans: "1x 120mm", Height: "152mm" }, affiliateUrl: "https://s.shopee.ph/5LBaPWTKog" },
+        { id: "co13", name: "Arctic Liquid Freezer III 360", brand: "Arctic", price: 6195, image: IMG.cooler, specs: { Type: "AIO Liquid", Fans: "3x 120mm P12", Height: "38mm (Rad)" }, affiliateUrl: "https://s.shopee.ph/5foQoQUDFw" },
+        { id: "co14", name: "NZXT Kraken Elite 360 RGB", brand: "NZXT", price: 18849, image: IMG.cooler, specs: { Type: "AIO Liquid", Fans: "3x 120mm", Height: "27mm (Rad)" }, affiliateUrl: "https://s.shopee.ph/AAGqAjmdkq" },
+        { id: "co15", name: "Lian Li HydroShift LCD 360", brand: "Lian Li", price: 9889, image: IMG.cooler, specs: { Type: "AIO Liquid", Fans: "3x 120mm", Height: "27mm (Rad)" }, affiliateUrl: "https://s.shopee.ph/1gIRgsalVK" },
+        { id: "co16", name: "Lian Li Galahad II Trinity 360", brand: "Lian Li", price: 8141, image: IMG.cooler, specs: { Type: "AIO Liquid", Fans: "3x 120mm", Height: "32mm (Rad)" }, affiliateUrl: "https://s.shopee.ph/5LBk400sJN" },
+        { id: "co17", name: "DeepCool Mystique 360", brand: "DeepCool", price: 9190, image: IMG.cooler, specs: { Type: "AIO Liquid", Fans: "3x 120mm", Height: "27mm (Rad)" }, affiliateUrl: "https://s.shopee.ph/5VVAGSLUWe" },
+        { id: "co18", name: "Corsair iCUE LINK TITAN 360 RX RGB", brand: "Corsair", price: 11998, image: IMG.cooler, specs: { Type: "AIO Liquid", Fans: "3x 120mm", Height: "27mm (Rad)" }, affiliateUrl: "https://s.shopee.ph/2LY8UuI9dx" }
       ],
       case: [
-        {
-          id: "case-1",
-          name: "Montech Air 100 ARGB Micro-ATX",
-          brand: "Montech",
-          price: 2400,
-          image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150&auto=format&fit=crop&q=60",
-          specs: { Type: "Micro-ATX Mini Tower", IncludedFans: "4x ARGB Fans", Color: "Black" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "cs1", name: "Hyte Y70 Touch Infinite", brand: "Hyte", price: 29999, image: IMG.case, specs: { Type: "ATX Mid Tower", Fans: "None", Color: "Multi" }, affiliateUrl: "https://s.shopee.ph/4LJCtpf25w" },
+        { id: "cs2", name: "HYTE X50", brand: "Hyte", price: 0, image: IMG.case, specs: { Type: "ATX Mid Tower", Fans: "None", Color: "Multi" }, affiliateUrl: "#" },
+        { id: "cs3", name: "Hyte X50 Air", brand: "Hyte", price: 9499, image: IMG.case, specs: { Type: "ATX Mid Tower", Fans: "None", Color: "Multi" }, affiliateUrl: "https://s.shopee.ph/1Vz1Wf6GaP" },
+        { id: "cs4", name: "Corsair 2800X RS-R ARGB", brand: "Corsair", price: 6949, image: IMG.case, specs: { Type: "Micro-ATX Mini", Fans: "3x 120mm ARGB", Color: "Black" }, affiliateUrl: "https://s.shopee.ph/AAGzqlVW7a" },
+        { id: "cs5", name: "Asus Prime AP303", brand: "Asus", price: 6299, image: IMG.case, specs: { Type: "Micro-ATX Mini", Fans: "None", Color: "Black / White" }, affiliateUrl: "https://s.shopee.ph/9AOSexYRni" },
+        { id: "cs6", name: "Okinos Mirage 4", brand: "Okinos", price: 2590, image: IMG.case, specs: { Type: "Micro-ATX Mini", Fans: "None", Color: "Black" }, affiliateUrl: "https://s.shopee.ph/4qFTV832JP" },
+        { id: "cs7", name: "Trendsonic Juro", brand: "Trendsonic", price: 1499, image: IMG.case, specs: { Type: "Micro-ATX Mini", Fans: "3x RGB Fans", Color: "Black" }, affiliateUrl: "https://s.shopee.ph/9AOSezSl5Y" }
       ],
       fan: [
-        {
-          id: "fan-1",
-          name: "Arctic P12 PWM PST 120mm Fan",
-          brand: "Arctic",
-          price: 450,
-          image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=150&auto=format&fit=crop&q=60",
-          specs: { Size: "120mm", Speed: "200-1800 RPM", Bearing: "Fluid Dynamic" },
-          affiliateUrl: "https://shope.ee/YOUR_LINK_HERE"
-        }
+        { id: "f1", name: "Noctua NF-A14x25 G2 PWM", brand: "Noctua", price: 4078, image: IMG.fan, specs: { Size: "140mm", Speed: "1500 RPM", Bearing: "SSO2" }, affiliateUrl: "https://s.shopee.ph/20vI8IqebW" },
+        { id: "f2", name: "Arctic P14 Max", brand: "Arctic", price: 549, image: IMG.fan, specs: { Size: "140mm", Speed: "2800 RPM", Bearing: "FDB" }, affiliateUrl: "https://s.shopee.ph/W6ULcCpRA" },
+        { id: "f3", name: "Arctic P12 Max", brand: "Arctic", price: 850, image: IMG.fan, specs: { Size: "120mm", Speed: "3300 RPM", Bearing: "FDB" }, affiliateUrl: "https://s.shopee.ph/3qMwJoXznF" },
+        { id: "f4", name: "Corsair RS120 MAX", brand: "Corsair", price: 2727, image: IMG.fan, specs: { Size: "120mm (30mm thick)", Speed: "2000 RPM", Bearing: "Magnetic" }, affiliateUrl: "https://s.shopee.ph/7KwoULUl8t" },
+        { id: "f5", name: "be quiet! Silent Wings Pro 4", brand: "be quiet!", price: 1740, image: IMG.fan, specs: { Size: "120mm", Speed: "3000 RPM", Bearing: "FDB" }, affiliateUrl: "https://s.shopee.ph/7pt55MVJTi" },
+        { id: "f6", name: "Thermaltake ToughFan 12 Pro", brand: "Thermaltake", price: 2299, image: IMG.fan, specs: { Size: "120mm", Speed: "2000 RPM", Bearing: "Hydraulic" }, affiliateUrl: "https://s.shopee.ph/8fSC51BIVc" },
+        { id: "f7", name: "Lian Li UNI FAN TL LCD 120", brand: "Lian Li", price: 3249, image: IMG.fan, specs: { Size: "120mm", Speed: "1900 RPM", Bearing: "FDB" }, affiliateUrl: "https://s.shopee.ph/2gAyw4S8Fg" },
+        { id: "f8", name: "Lian Li UNI FAN TL 120", brand: "Lian Li", price: 3249, image: IMG.fan, specs: { Size: "120mm", Speed: "2600 RPM", Bearing: "FDB" }, affiliateUrl: "https://s.shopee.ph/4qFTWYKHn0" },
+        { id: "f9", name: "Corsair iCUE LINK QX120 RGB", brand: "Corsair", price: 3414, image: IMG.fan, specs: { Size: "120mm", Speed: "2400 RPM", Bearing: "Magnetic" }, affiliateUrl: "https://s.shopee.ph/4fw3KWie2E" },
+        { id: "f10", name: "Phanteks D30-120", brand: "Phanteks", price: 1836, image: IMG.fan, specs: { Size: "120mm", Speed: "2000 RPM", Bearing: "FDB" }, affiliateUrl: "https://s.shopee.ph/4Vcd8Jd8xS" },
+        { id: "f11", name: "NZXT F120 RGB Duo", brand: "NZXT", price: 1575, image: IMG.fan, specs: { Size: "120mm", Speed: "1800 RPM", Bearing: "FDB" }, affiliateUrl: "https://s.shopee.ph/1ADmE8BbC" },
+        { id: "f12", name: "be quiet! Light Wings LX 120mm", brand: "be quiet!", price: 1866, image: IMG.fan, specs: { Size: "120mm", Speed: "2100 RPM", Bearing: "Rifle" }, affiliateUrl: "https://s.shopee.ph/4Vcd8ggZQQ" },
+        { id: "f13", name: "Thermalright TL-C12C-S", brand: "Thermalright", price: 650, image: IMG.fan, specs: { Size: "120mm", Speed: "1550 RPM", Bearing: "S-FDB" }, affiliateUrl: "https://s.shopee.ph/80CVJ7yFab" },
+        { id: "f14", name: "Thermalright TL-K12", brand: "Thermalright", price: 1059, image: IMG.fan, specs: { Size: "120mm", Speed: "2150 RPM", Bearing: "S-FDB V2" }, affiliateUrl: "https://s.shopee.ph/1Vz1ZOqONJ" },
+        { id: "f15", name: "Montech AX120 PWM", brand: "Montech", price: 608, image: IMG.fan, specs: { Size: "120mm", Speed: "1600 RPM", Bearing: "HDB" }, affiliateUrl: "https://s.shopee.ph/7fZeunktOs" },
+        { id: "f16", name: "Montech RX120 PWM (Reverse)", brand: "Montech", price: 608, image: IMG.fan, specs: { Size: "120mm", Speed: "1600 RPM", Bearing: "HDB" }, affiliateUrl: "https://s.shopee.ph/80CVJTYB30" }
+      ],
+      monitor: [
+        { id: "mon1", name: "ASUS ROG Swift OLED PG27AQDP", brand: "ASUS", price: 79285, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "480Hz", Panel: "WOLED" }, affiliateUrl: "https://s.shopee.ph/7VGEpvr6ix" },
+        { id: "mon2", name: "Alienware AW2725DF", brand: "Dell", price: 0, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "360Hz", Panel: "QD-OLED" }, affiliateUrl: "https://s.shopee.ph/9zxZoZlOev" },
+        { id: "mon3", name: "ASUS ROG Swift OLED PG32UCDM", brand: "ASUS", price: 12037, image: IMG.monitor, specs: { Size: "32\"", Res: "3840x2160", Refresh: "240Hz", Panel: "QD-OLED" }, affiliateUrl: "https://s.shopee.ph/9052cqLI4H" },
+        { id: "mon4", name: "MSI MPG 321URX QD-OLED", brand: "MSI", price: 16125, image: IMG.monitor, specs: { Size: "32\"", Res: "3840x2160", Refresh: "240Hz", Panel: "QD-OLED" }, affiliateUrl: "https://s.shopee.ph/9V1JDnaev2" },
+        { id: "mon5", name: "Gigabyte AORUS FO27Q3", brand: "Gigabyte", price: 24375, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "360Hz", Panel: "QD-OLED" }, affiliateUrl: "https://s.shopee.ph/7fZf2StY4n" },
+        { id: "mon6", name: "AOC Q27G3XMN", brand: "AOC", price: 16160, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "180Hz", Panel: "Mini-LED VA" }, affiliateUrl: "https://s.shopee.ph/50YtrbyZON" },
+        { id: "mon7", name: "ASUS TUF Gaming VG27AQ3A", brand: "ASUS", price: 28431, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "180Hz", Panel: "Fast IPS" }, affiliateUrl: "https://s.shopee.ph/gPuhh53UC" },
+        { id: "mon8", name: "MSI MAG 274QRF QD E2", brand: "MSI", price: 16500, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "180Hz", Panel: "Rapid IPS" }, affiliateUrl: "https://s.shopee.ph/5VVASebM3d" },
+        { id: "mon9", name: "Gigabyte GS27Q", brand: "Gigabyte", price: 15995, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "170Hz", Panel: "IPS" }, affiliateUrl: "https://s.shopee.ph/1Vz1hKuaRH" },
+        { id: "mon10", name: "Acer Nitro XV272U V3", brand: "Acer", price: 15150, image: IMG.monitor, specs: { Size: "27\"", Res: "2560x1440", Refresh: "180Hz", Panel: "IPS" }, affiliateUrl: "https://s.shopee.ph/4LJD4aV2uh" },
+        { id: "mon11", name: "AOC 24G4", brand: "AOC", price: 7395, image: IMG.monitor, specs: { Size: "24\"", Res: "1920x1080", Refresh: "180Hz", Panel: "Fast IPS" }, affiliateUrl: "https://s.shopee.ph/1BMBIpAcP2" },
+        { id: "mon12", name: "ASUS TUF Gaming VG249Q3A", brand: "ASUS", price: 8885, image: IMG.monitor, specs: { Size: "24\"", Res: "1920x1080", Refresh: "180Hz", Panel: "Fast IPS" }, affiliateUrl: "https://s.shopee.ph/9Kht1raJxR" },
+        { id: "mon13", name: "AOC 24G15N", brand: "AOC", price: 5295, image: IMG.monitor, specs: { Size: "24\"", Res: "1920x1080", Refresh: "180Hz", Panel: "VA" }, affiliateUrl: "https://s.shopee.ph/1gIRtngdFc" },
+        { id: "mon14", name: "BenQ Zowie XL2546X", brand: "BenQ", price: 22090, image: IMG.monitor, specs: { Size: "25\"", Res: "1920x1080", Refresh: "240Hz", Panel: "Fast TN" }, affiliateUrl: "https://s.shopee.ph/qjKuINY2X" },
+        { id: "mon15", name: "ViewSonic OMNI VX2479-HD-PRO", brand: "ViewSonic", price: 7090, image: IMG.monitor, specs: { Size: "24\"", Res: "1920x1080", Refresh: "165Hz", Panel: "IPS" }, affiliateUrl: "https://s.shopee.ph/9052dLVBAn" },
+        { id: "mon16", name: "Koorui 24E3", brand: "Koorui", price: 7309, image: IMG.monitor, specs: { Size: "24\"", Res: "1920x1080", Refresh: "165Hz", Panel: "IPS" }, affiliateUrl: "https://s.shopee.ph/AKaQDqpMH9" },
+        { id: "mon17", name: "Acer Nitro KG241Y", brand: "Acer", price: 6806, image: IMG.monitor, specs: { Size: "24\"", Res: "1920x1080", Refresh: "165Hz", Panel: "VA" }, affiliateUrl: "https://s.shopee.ph/70JyFmt0Xn" }
       ]
     };
 
     // User's active build state
-    let activeCategory = 'mobo';
+    let activeCategory = 'cpu';
     let currentBuild = {
       cpu: null,
       mobo: null,
@@ -355,7 +461,8 @@
       psu: null,
       cooler: null,
       case: null,
-      fan: null
+      fan: null,
+      monitor: null
     };
 
     // Render Category Pills
@@ -399,6 +506,8 @@
         const specsHtml = Object.entries(item.specs)
           .map(([k, v]) => `<div><span class="text-zinc-500">${k}:</span> ${v}</div>`)
           .join('');
+          
+        const priceDisplay = item.price > 0 ? `₱${item.price.toLocaleString()}` : `<span class="text-xs text-amber-500">Price N/A</span>`;
 
         return `
           <div class="bg-[#121316] border border-zinc-800 rounded-xl p-3.5 flex flex-col justify-between hover:border-zinc-700 transition space-y-3">
@@ -419,7 +528,7 @@
 
             <!-- Price & Action Buttons -->
             <div class="pt-2 border-t border-zinc-800/80 flex items-center justify-between gap-2">
-              <span class="text-sm font-extrabold text-white">₱${item.price.toLocaleString()}</span>
+              <span class="text-sm font-extrabold text-white">${priceDisplay}</span>
               
               <div class="flex items-center gap-1.5">
                 <button 
@@ -430,7 +539,7 @@
                 <a 
                   href="${item.affiliateUrl}" 
                   target="_blank" 
-                  class="bg-[#EE4D2D]/15 hover:bg-[#EE4D2D] text-[#EE4D2D] hover:text-white border border-[#EE4D2D]/30 px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1">
+                  class="bg-[#EE4D2D]/15 hover:bg-[#EE4D2D] text-[#EE4D2D] hover:text-white border border-[#EE4D2D]/30 px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1 ${item.price === 0 ? 'opacity-50 cursor-not-allowed' : ''}">
                   <i class="fa-solid fa-bag-shopping text-[10px]"></i> Buy
                 </a>
               </div>
@@ -490,6 +599,7 @@
         if (item) {
           totalPrice += item.price;
           selectedCount++;
+          const priceDisplay = item.price > 0 ? `₱${item.price.toLocaleString()}` : `N/A`;
           return `
             <div class="py-2 flex items-center justify-between gap-2">
               <div class="min-w-0 flex-1">
@@ -502,7 +612,7 @@
                 <p class="text-[10px] text-zinc-500 pl-4">${cat.label}</p>
               </div>
               <div class="flex items-center gap-2 shrink-0">
-                <span class="font-semibold text-white text-xs">₱${item.price.toLocaleString()}</span>
+                <span class="font-semibold text-white text-xs">${priceDisplay}</span>
                 <a href="${item.affiliateUrl}" target="_blank" class="text-[11px] text-[#EE4D2D] hover:underline flex items-center gap-0.5">
                   <i class="fa-solid fa-bag-shopping text-[9px]"></i> Buy
                 </a>
